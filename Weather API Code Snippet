@@ -1,0 +1,37 @@
+// status code validation   
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+// status message validation 
+pm.test("Status Message is OK", function () {
+    pm.response.to.have.status("OK");
+});
+// Lattitude and Longitude validation 
+pm.test("Response time is less than 2000ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(2000);
+});
+var jsonData = pm.response.json();
+var latitude = jsonData.coord.lat;
+var longitude = jsonData.coord.lon;
+pm.test("Latitude is correct", function () {
+    pm.expect(latitude).to.equal(51.51);
+});
+pm.test("Longitude is correct", function () {
+    pm.expect(longitude).to.equal(-0.13);
+});
+
+// Mandatory attribute validation 
+pm.test("Response should have Lon and lat details",() => {
+   pm.expect((pm.response.json()).coord).to.have.keys(['lon','lat']); 
+});
+
+//Data type valiadtion 
+
+pm.test("Latitude data type is number", function () {
+    pm.expect(typeof latitude).to.eql("number");
+});
+
+pm.test("Longitude data type is number", function () {
+    pm.expect(typeof longitude).to.eql("number");
+});
+
